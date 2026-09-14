@@ -23,6 +23,8 @@ class MetricsService
     public function logMetrics(Request $request)// : array
     {
         $session = $this->updateOrCreateSession($request);
+        $this->logPageView($session, $request);
+
 
         return [
             'website' => Website::where('uuid', request()->query('website_uuid'))->first(),
@@ -49,6 +51,11 @@ class MetricsService
 
             ],
             'location' => $this->position,
+            'request' => [
+                'url' => $request->url(),
+                'fullUrl' => $request->fullUrl(),
+                'path' => $request->path(),
+            ],
         ];
     }
 
@@ -71,12 +78,22 @@ class MetricsService
                 'longitude' => $this->position->longitude ?? '',
                 'os' => $this->agent->platform(),
                 'device_type' => $this->getDeviceType($this->agent),
-                'referrer_domain' => ! empty($request->headers->get('referer')) ? parse_url($request->headers->get('referer'), PHP_URL_HOST) ?? null : null,
+                'referrer_domain' => !empty($request->headers->get('referer')) ? parse_url($request->headers->get('referer'), PHP_URL_HOST) ?? null : null,
                 'last_seen_at' => now(),
             ]);
         }
 
         return $session;
+    }
+
+    private function logPageView(VisitorSession $session, Request $request): void
+    {
+        $session->pageViews()->create([
+            'website_id' => $session->website_id,
+            'path' => $request->path(),
+            'referrer' => $request->headers->get('referer'),
+            'created_at' => now(),
+        ]);
     }
 
     private function getDeviceType(Agent $agent): string

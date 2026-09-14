@@ -14,8 +14,8 @@ class WebsiteOverviewWidget extends StatsOverviewWidget
     {
         return [
             Stat::make('Unique visits', $this->record->getUniqueVisitsCount()),
-            Stat::make('Bounce rate', '21%'),
-            Stat::make('Average time on page', '3:12'),
+            Stat::make('Views', $this->record->getViewsCount()),
+            Stat::make('Average time on page', $this->record->getAverageTimeOnPage()),
         ];
     }
 }

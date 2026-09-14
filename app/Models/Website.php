@@ -19,9 +19,8 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, VisitorSession> $visitorSessions
+ * @property-read Collection<int, \App\Models\VisitorSession> $visitorSessions
  * @property-read int|null $visitor_sessions_count
- *
  * @method static \Database\Factories\WebsiteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website newQuery()
@@ -36,7 +35,6 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withoutTrashed()
- *
  * @mixin \Eloquent
  */
 class Website extends Model
@@ -62,8 +60,32 @@ class Website extends Model
         );
     }
 
+    public function getViewsCount(): int
+    {
+        return cache()->remember(
+            "website_{$this->id}_views_count",
+            now()->addMinutes(5),
+            fn () => $this->pageViews()->count()
+        );
+    }
+
+    public function getAverageTimeOnPage(): string
+    {
+        // Replace this with the actual calculation for average time on page
+        return cache()->remember(
+            "website_{$this->id}_average_time_on_page",
+            now()->addMinutes(5),
+            fn () => '3:12'
+        );
+    }
+
     public function visitorSessions(): HasMany
     {
         return $this->hasMany(VisitorSession::class);
+    }
+
+    public function pageViews(): HasMany
+    {
+        return $this->hasMany(PageView::class);
     }
 }
