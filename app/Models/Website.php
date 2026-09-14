@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\WebsiteFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -47,5 +48,10 @@ class Website extends Model
         static::creating(function ($model) {
             $model->uuid = Str::uuid();
         });
+    }
+
+    public function visitorSessions(): HasMany
+    {
+        return $this->hasMany(VisitorSession::class);
     }
 }
