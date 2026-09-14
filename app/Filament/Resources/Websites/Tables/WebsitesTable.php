@@ -20,7 +20,7 @@ class WebsitesTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('url')
+                TextColumn::make('domain')
                     ->searchable(),
                 TextColumn::make('uuid')
                     ->toggleable(isToggledHiddenByDefault: true)

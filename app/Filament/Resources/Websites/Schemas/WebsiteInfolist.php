@@ -13,7 +13,7 @@ class WebsiteInfolist
         return $schema
             ->components([
                 TextEntry::make('name'),
-                TextEntry::make('url'),
+                TextEntry::make('domain'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

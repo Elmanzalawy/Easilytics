@@ -13,8 +13,7 @@ class WebsiteForm
             ->components([
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('url')
-                    ->url()
+                TextInput::make('domain')
                     ->required(),
             ]);
     }

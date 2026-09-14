@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         Website::factory()->create([
             'name' => 'ByteSoftware',
-            'url' => 'https://bytesoftware.io',
+            'domain' => app()->isLocal() ? '127.0.0.1' : 'bytesoftware.io',
             'uuid' => Str::uuid(),
         ]);
     }

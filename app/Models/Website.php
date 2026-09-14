@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $uuid
  * @property string $name
- * @property string $url
+ * @property string $domain
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -29,10 +29,10 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereDomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withoutTrashed()

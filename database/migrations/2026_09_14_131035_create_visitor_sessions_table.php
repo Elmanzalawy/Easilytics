@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('website_id')->references('id')->on('websites');
             $table->index('website_id');
             $table->string('hash');
-            $table->string('id_address');
+            $table->string('ip_address');
             $table->string('country');
             $table->string('city');
             $table->string('region')->nullable();
