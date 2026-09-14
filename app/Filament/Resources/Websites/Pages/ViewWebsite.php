@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Websites\Pages;
 
 use App\Filament\Resources\Websites\WebsiteResource;
+use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -14,6 +15,19 @@ class ViewWebsite extends ViewRecord
     {
         return [
             EditAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        // return [
+        //     WebsiteOverviewWidget::class,
+        // ];
+
+        return [
+            WebsiteOverviewWidget::make([
+                'status' => 'active',
+            ]),
         ];
     }
 }

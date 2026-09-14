@@ -23,7 +23,7 @@ use Illuminate\Support\Carbon;
  * @property string $os
  * @property string $device_type
  * @property string|null $referrer_domain
- * @property string|null $last_seen_at
+ * @property Carbon|null $last_seen_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Website|null $website
@@ -56,6 +56,13 @@ class VisitorSession extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'last_seen_at' => 'datetime',
+        ];
+    }
 
     public function website(): BelongsTo
     {

@@ -9,6 +9,7 @@ use App\Filament\Resources\Websites\Pages\ViewWebsite;
 use App\Filament\Resources\Websites\Schemas\WebsiteForm;
 use App\Filament\Resources\Websites\Schemas\WebsiteInfolist;
 use App\Filament\Resources\Websites\Tables\WebsitesTable;
+use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
 use App\Models\Website;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -55,6 +56,13 @@ class WebsiteResource extends Resource
             'create' => CreateWebsite::route('/create'),
             'view' => ViewWebsite::route('/{record}'),
             'edit' => EditWebsite::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            WebsiteOverviewWidget::class,
         ];
     }
 

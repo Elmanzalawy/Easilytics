@@ -53,6 +53,15 @@ class Website extends Model
         });
     }
 
+    public function getUniqueVisitsCount(): int
+    {
+        return cache()->remember(
+            "website_{$this->id}_unique_visits_count",
+            now()->addMinutes(5),
+            fn () => $this->visitorSessions()->count()
+        );
+    }
+
     public function visitorSessions(): HasMany
     {
         return $this->hasMany(VisitorSession::class);
