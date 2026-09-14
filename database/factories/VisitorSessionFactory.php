@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\VisitorSession;
+use App\Models\Website;
 use Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,7 @@ class VisitorSessionFactory extends Factory
     public function definition(): array
     {
         return [
-            'website_id' => \App\Models\Website::factory(),
+            'website_id' => Website::factory(),
             'hash' => Hash::make($this->faker->uuid()),
             'id_address' => $this->faker->ipv4(),
             'country' => $this->faker->country(),

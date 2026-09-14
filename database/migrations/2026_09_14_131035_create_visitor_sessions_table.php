@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('country');
             $table->string('city');
             $table->string('region')->nullable();
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('os');
             $table->string('device_type');
             $table->string('referrer_domain')->nullable();

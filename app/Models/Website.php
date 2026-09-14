@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\WebsiteFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,8 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
+ * @property-read Collection<int, VisitorSession> $visitorSessions
+ * @property-read int|null $visitor_sessions_count
  *
  * @method static \Database\Factories\WebsiteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website newModelQuery()
