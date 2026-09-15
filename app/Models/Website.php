@@ -19,8 +19,11 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, \App\Models\VisitorSession> $visitorSessions
+ * @property-read Collection<int, PageView> $pageViews
+ * @property-read int|null $page_views_count
+ * @property-read Collection<int, VisitorSession> $visitorSessions
  * @property-read int|null $visitor_sessions_count
+ *
  * @method static \Database\Factories\WebsiteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website newQuery()
@@ -35,6 +38,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Website withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Website extends Model
@@ -66,6 +70,30 @@ class Website extends Model
             "website_{$this->id}_views_count",
             now()->addMinutes(5),
             fn () => $this->pageViews()->count()
+        );
+    }
+
+    public function getBounceRate(): float
+    {
+        return cache()->remember(
+            "website_{$this->id}_bounce_rate",
+            now()->addMinutes(5),
+            function () {
+                $totalSessions = $this->getUniqueVisitsCount();
+
+                if ($totalSessions === 0) {
+                    return 0;
+                }
+
+                $singlePageSessions = PageView::query()
+                    ->where('website_id', $this->id)
+                    ->whereNotNull('visitor_session_id')
+                    ->groupBy('visitor_session_id')
+                    ->havingRaw('COUNT(*) = 1')
+                    ->count();
+
+                return ($singlePageSessions / $totalSessions) * 100;
+            }
         );
     }
 

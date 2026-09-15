@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\PageViewFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,8 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $path
  * @property string|null $referrer
  * @property string $created_at
- * @property-read \App\Models\VisitorSession $visitorSession
- * @property-read \App\Models\Website|null $website
+ * @property-read VisitorSession $visitorSession
+ * @property-read Website|null $website
+ *
  * @method static \Database\Factories\PageViewFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PageView newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PageView newQuery()
@@ -27,11 +29,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PageView whereReferrer($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PageView whereVisitorSessionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PageView whereWebsiteId($value)
+ *
  * @mixin \Eloquent
  */
 class PageView extends Model
 {
-    /** @use HasFactory<\Database\Factories\PageViewFactory> */
+    /** @use HasFactory<PageViewFactory> */
     use HasFactory;
 
     public $timestamps = false;
@@ -47,5 +50,4 @@ class PageView extends Model
     {
         return $this->belongsTo(VisitorSession::class);
     }
-
 }

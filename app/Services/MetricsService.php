@@ -25,7 +25,6 @@ class MetricsService
         $session = $this->updateOrCreateSession($request);
         $this->logPageView($session, $request);
 
-
         return [
             'website' => Website::where('uuid', request()->query('website_uuid'))->first(),
             'host' => request()->host(),
@@ -78,7 +77,7 @@ class MetricsService
                 'longitude' => $this->position->longitude ?? '',
                 'os' => $this->agent->platform(),
                 'device_type' => $this->getDeviceType($this->agent),
-                'referrer_domain' => !empty($request->headers->get('referer')) ? parse_url($request->headers->get('referer'), PHP_URL_HOST) ?? null : null,
+                'referrer_domain' => ! empty($request->headers->get('referer')) ? parse_url($request->headers->get('referer'), PHP_URL_HOST) ?? null : null,
                 'last_seen_at' => now(),
             ]);
         }

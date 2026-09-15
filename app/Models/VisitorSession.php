@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\VisitorSessionFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,9 +28,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $last_seen_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PageView> $pageViews
+ * @property-read Collection<int, PageView> $pageViews
  * @property-read int|null $page_views_count
- * @property-read \App\Models\Website|null $website
+ * @property-read Website|null $website
+ *
  * @method static \Database\Factories\VisitorSessionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession newQuery()
@@ -49,6 +51,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereRegion($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereWebsiteId($value)
+ *
  * @mixin \Eloquent
  */
 class VisitorSession extends Model
