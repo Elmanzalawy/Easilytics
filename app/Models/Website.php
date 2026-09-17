@@ -92,7 +92,7 @@ class Website extends Model
                     ->havingRaw('COUNT(*) = 1')
                     ->count();
 
-                return ($singlePageSessions / $totalSessions) * 100;
+                return $singlePageSessions / $totalSessions;
             }
         );
     }

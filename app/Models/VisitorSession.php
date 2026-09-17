@@ -24,7 +24,8 @@ use Illuminate\Support\Carbon;
  * @property string $longitude
  * @property string $os
  * @property string $device_type
- * @property string|null $referrer_domain
+ * @property string $language
+ * @property string|null $referrer
  * @property Carbon|null $last_seen_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -43,11 +44,12 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereIpAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereLastSeenAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereLatitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereLongitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereOs($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereReferrerDomain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereReferrer($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereRegion($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VisitorSession whereWebsiteId($value)

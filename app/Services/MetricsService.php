@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Dtos\SendMetricsDto;
 use App\Models\VisitorSession;
 use App\Models\Website;
-use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 use Location;
 use Stevebauman\Location\Position;
@@ -20,16 +20,16 @@ class MetricsService
         $this->position = Location::get('197.54.28.225');
     }
 
-    public function logMetrics(Request $request)// : array
+    public function logMetrics(SendMetricsDto $dto): void
     {
-        $session = $this->updateOrCreateSession($request);
-        $this->logPageView($session, $request);
+        $session = $this->updateOrCreateSession($dto);
+        $this->logPageView($session, $dto);
 
-        return [
-            'website' => Website::where('uuid', request()->query('website_uuid'))->first(),
-            'host' => request()->host(),
-            'ip' => request()->ip(),
-            'fingerprint' => request()->fingerprint(),
+        info(json_encode([
+            'website' => Website::where('uuid', $dto->website_uuid)->first(),
+            'host' => $dto->host,
+            'ip' => $dto->ip,
+            'fingerprint' => $dto->fingerprint,
             'session' => $session,
             'agent' => [
                 'isAndroidOS' => $this->agent->isAndroidOS(),
@@ -50,34 +50,30 @@ class MetricsService
 
             ],
             'location' => $this->position,
-            'request' => [
-                'url' => $request->url(),
-                'fullUrl' => $request->fullUrl(),
-                'path' => $request->path(),
-            ],
-        ];
+        ], JSON_PRETTY_PRINT));
     }
 
-    private function updateOrCreateSession(Request $request)
+    private function updateOrCreateSession(SendMetricsDto $dto): VisitorSession
     {
-        $session = VisitorSession::where('hash', $request->fingerprint())->first();
+        $session = VisitorSession::where('hash', $dto->fingerprint)->first();
 
         if ($session) {
             $session->last_seen_at = now();
             $session->save();
         } else {
             $session = VisitorSession::create([
-                'website_id' => Website::where('uuid', $request->query('website_uuid'))->first()->id,
-                'hash' => $request->fingerprint(),
-                'ip_address' => $request->ip(),
-                'country' => $this->position->countryName ?? '',
-                'city' => $this->position->cityName ?? '',
-                'region' => $this->position->regionName ?? '',
-                'latitude' => $this->position->latitude ?? '',
-                'longitude' => $this->position->longitude ?? '',
+                'website_id' => Website::where('uuid', $dto->website_uuid)->first()->id,
+                'hash' => $dto->fingerprint,
+                'ip_address' => $dto->ip,
+                'country' => $this->position->countryName,
+                'city' => $this->position->cityName,
+                'region' => $this->position->regionName,
+                'latitude' => $this->position->latitude,
+                'longitude' => $this->position->longitude,
                 'os' => $this->agent->platform(),
                 'device_type' => $this->getDeviceType($this->agent),
-                'referrer_domain' => ! empty($request->headers->get('referer')) ? parse_url($request->headers->get('referer'), PHP_URL_HOST) ?? null : null,
+                'language' => array_first($this->agent->languages()),
+                'referrer' => $dto->referrer,
                 'last_seen_at' => now(),
             ]);
         }
@@ -85,12 +81,12 @@ class MetricsService
         return $session;
     }
 
-    private function logPageView(VisitorSession $session, Request $request): void
+    private function logPageView(VisitorSession $session, SendMetricsDto $dto): void
     {
         $session->pageViews()->create([
             'website_id' => $session->website_id,
-            'path' => $request->path(),
-            'referrer' => $request->headers->get('referer'),
+            'path' => $dto->path,
+            'referrer' => $dto->referrer,
             'created_at' => now(),
         ]);
     }
