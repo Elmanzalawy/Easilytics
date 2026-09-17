@@ -12,17 +12,17 @@ class WebsiteInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('domain'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (Website $record): bool => $record->trashed()),
+                // TextEntry::make('name'),
+                // TextEntry::make('domain'),
+                // TextEntry::make('created_at')
+                //     ->dateTime()
+                //     ->placeholder('-'),
+                // TextEntry::make('updated_at')
+                //     ->dateTime()
+                //     ->placeholder('-'),
+                // TextEntry::make('deleted_at')
+                //     ->dateTime()
+                //     ->visible(fn (Website $record): bool => $record->trashed()),
             ]);
     }
 }

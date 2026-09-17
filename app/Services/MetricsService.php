@@ -86,7 +86,6 @@ class MetricsService
         $session->pageViews()->create([
             'website_id' => $session->website_id,
             'path' => $dto->path,
-            'referrer' => $dto->referrer,
             'created_at' => now(),
         ]);
     }

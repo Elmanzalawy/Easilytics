@@ -18,7 +18,6 @@ return new class extends Migration
             $table->index('visitor_session_id');
             $table->index('website_id');
             $table->string('path');
-            $table->string('referrer')->nullable();
             $table->timestamp('created_at');
         });
     }

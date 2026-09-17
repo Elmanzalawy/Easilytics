@@ -9,7 +9,7 @@ use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 use Illuminate\Database\Eloquent\Builder;
 
-class PageViewsWidget extends TableWidget
+class ReferrersWidget extends TableWidget
 {
     public ?Website $record = null;
 
@@ -21,16 +21,16 @@ class PageViewsWidget extends TableWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn (): Builder => $this->record->query())
+            ->query(fn (): Builder => $this->record->visitorSessions()->getQuery())
             ->modifyQueryUsing(function (Builder $query) {
-                return $query->selectRaw('page_views.id, page_views.path, COUNT(*) as page_views_count')
-                    ->join('page_views', 'page_views.website_id', '=', 'websites.id')
-                    ->groupBy('page_views.path')
-                    ->orderBy('page_views_count', 'desc');
+                return $query->selectRaw('visitor_sessions.id, visitor_sessions.referrer, COUNT(*) as referrers_count')
+                    ->whereNotNull('visitor_sessions.referrer')
+                    ->groupBy('visitor_sessions.referrer')
+                    ->orderBy('referrers_count', 'desc');
             })
             ->columns([
-                TextColumn::make('path'),
-                TextColumn::make('page_views_count')->label('Page Views'),
+                TextColumn::make('referrer'),
+                TextColumn::make('referrers_count')->label('Total'),
             ])
             ->paginationPageOptions([5, 10, 25])
             ->defaultPaginationPageOption(5)
