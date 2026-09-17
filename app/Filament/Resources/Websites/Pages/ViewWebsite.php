@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Websites\Pages;
 
 use App\Filament\Resources\Websites\WebsiteResource;
+use App\Filament\Resources\Websites\Widgets\PageViewsWidget;
 use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
@@ -25,9 +26,8 @@ class ViewWebsite extends ViewRecord
         // ];
 
         return [
-            WebsiteOverviewWidget::make([
-                'status' => 'active',
-            ]),
+            WebsiteOverviewWidget::make(),
+            PageViewsWidget::make(),
         ];
     }
 }

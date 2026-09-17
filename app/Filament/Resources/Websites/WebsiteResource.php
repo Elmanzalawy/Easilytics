@@ -9,6 +9,7 @@ use App\Filament\Resources\Websites\Pages\ViewWebsite;
 use App\Filament\Resources\Websites\Schemas\WebsiteForm;
 use App\Filament\Resources\Websites\Schemas\WebsiteInfolist;
 use App\Filament\Resources\Websites\Tables\WebsitesTable;
+use App\Filament\Resources\Websites\Widgets\PageViewsWidget;
 use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
 use App\Models\Website;
 use BackedEnum;
@@ -63,6 +64,7 @@ class WebsiteResource extends Resource
     {
         return [
             WebsiteOverviewWidget::class,
+            PageViewsWidget::class,
         ];
     }
 
