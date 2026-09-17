@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('longitude');
             $table->string('os');
             $table->string('device_type');
-            $table->string('referrer_domain')->nullable();
+            $table->string('language');
+            $table->string('referrer')->nullable();
             $table->timestamp('last_seen_at')->nullable();
             $table->timestamps();
         });
