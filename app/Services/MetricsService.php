@@ -71,6 +71,7 @@ class MetricsService
                 'latitude' => $this->position->latitude,
                 'longitude' => $this->position->longitude,
                 'os' => $this->agent->platform(),
+                'browser' => $this->agent->browser(),
                 'device_type' => $this->getDeviceType($this->agent),
                 'language' => array_first($this->agent->languages()),
                 'referrer' => $dto->referrer,

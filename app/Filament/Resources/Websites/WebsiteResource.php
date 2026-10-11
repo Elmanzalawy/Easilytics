@@ -9,6 +9,8 @@ use App\Filament\Resources\Websites\Pages\ViewWebsite;
 use App\Filament\Resources\Websites\Schemas\WebsiteForm;
 use App\Filament\Resources\Websites\Schemas\WebsiteInfolist;
 use App\Filament\Resources\Websites\Tables\WebsitesTable;
+use App\Filament\Resources\Websites\Widgets\EnvironmentWidget;
+use App\Filament\Resources\Websites\Widgets\LocationWidget;
 use App\Filament\Resources\Websites\Widgets\PageViewsWidget;
 use App\Filament\Resources\Websites\Widgets\ReferrersWidget;
 use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;

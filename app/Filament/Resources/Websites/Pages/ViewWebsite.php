@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Websites\Pages;
 
 use App\Filament\Resources\Websites\WebsiteResource;
+use App\Filament\Resources\Websites\Widgets\EnvironmentWidget;
+use App\Filament\Resources\Websites\Widgets\LocationWidget;
 use App\Filament\Resources\Websites\Widgets\PageViewsWidget;
 use App\Filament\Resources\Websites\Widgets\ReferrersWidget;
 use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
@@ -30,6 +32,8 @@ class ViewWebsite extends ViewRecord
             WebsiteOverviewWidget::make(),
             PageViewsWidget::make(),
             ReferrersWidget::make(),
+            // EnvironmentWidget::make(),
+            // LocationWidget::make(),
         ];
     }
 }
