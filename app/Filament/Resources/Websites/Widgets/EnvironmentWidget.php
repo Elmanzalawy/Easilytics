@@ -7,7 +7,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
-use Filament\Schemas\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Enums\FiltersResetActionPosition;
@@ -40,7 +39,7 @@ class EnvironmentWidget extends TableWidget
         $environmentColumn = self::ENVIRONMENT_COLUMNS[$this->selectedEnvironment] ?? self::ENVIRONMENT_COLUMNS['os'];
 
         return $table
-            ->query(fn(): Builder => $this->record->visitorSessions()->getQuery())
+            ->query(fn (): Builder => $this->record->visitorSessions()->getQuery())
             ->modifyQueryUsing(function (Builder $query) use ($environmentColumn) {
                 return $query
                     ->selectRaw("visitor_sessions.id, visitor_sessions.{$environmentColumn['column']}, COUNT(*) as count")
@@ -48,7 +47,7 @@ class EnvironmentWidget extends TableWidget
                     ->orderByDesc('count');
             })
             ->columns([
-                TextColumn::make($environmentColumn['column'])->label($environmentColumn['label'] . rand(1, 1000)),
+                TextColumn::make($environmentColumn['column'])->label($environmentColumn['label'].rand(1, 1000)),
                 TextColumn::make('count')->label('Visitors'),
             ])
             ->filters([
@@ -77,7 +76,7 @@ class EnvironmentWidget extends TableWidget
                             ->live()
                             ->afterStateUpdated(function (?string $state): void {
                                 info($state);
-                                $this->table->filtersApplyAction(fn() => null);
+                                $this->table->filtersApplyAction(fn () => null);
                                 $this->afterEnvironmentChanged($state);
                             })
                             ->options([
