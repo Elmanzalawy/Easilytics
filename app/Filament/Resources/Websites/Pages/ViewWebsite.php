@@ -8,6 +8,8 @@ use App\Filament\Resources\Websites\Widgets\LocationWidget;
 use App\Filament\Resources\Websites\Widgets\PageViewsWidget;
 use App\Filament\Resources\Websites\Widgets\ReferrersWidget;
 use App\Filament\Resources\Websites\Widgets\WebsiteOverviewWidget;
+use App\Services\AnalyticsScriptService;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -18,6 +20,13 @@ class ViewWebsite extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('integrationScript')
+                ->label('Integration script')
+                ->icon('heroicon-o-code-bracket')
+                ->modalHeading('Add this to the <head> of your website')
+                ->modalDescription(fn (): string => app(AnalyticsScriptService::class)->snippet($this->getRecord()))
+                ->modalSubmitAction(false)
+                ->modalCancelActionLabel('Close'),
             EditAction::make(),
         ];
     }

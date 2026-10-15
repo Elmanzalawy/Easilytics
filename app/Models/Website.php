@@ -82,17 +82,19 @@ class Website extends Model
                 $totalSessions = $this->getUniqueVisitsCount();
 
                 if ($totalSessions === 0) {
-                    return 0;
+                    return 0.0;
                 }
 
                 $singlePageSessions = PageView::query()
                     ->where('website_id', $this->id)
                     ->whereNotNull('visitor_session_id')
+                    ->select('visitor_session_id')
                     ->groupBy('visitor_session_id')
                     ->havingRaw('COUNT(*) = 1')
+                    ->pluck('visitor_session_id')
                     ->count();
 
-                return $singlePageSessions / $totalSessions;
+                return (float) $singlePageSessions / (float) $totalSessions;
             }
         );
     }
@@ -103,7 +105,7 @@ class Website extends Model
         return cache()->remember(
             "website_{$this->id}_average_time_on_page",
             now()->addMinutes(5),
-            fn () => '3:12'
+            fn () => '1s'
         );
     }
 
